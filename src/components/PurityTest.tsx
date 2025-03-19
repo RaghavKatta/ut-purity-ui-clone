@@ -1,6 +1,8 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
+import { Share2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useToast } from '@/hooks/use-toast';
 
 const questions = [
   "Held hands romantically?",
@@ -60,6 +62,7 @@ const PurityTest: React.FC = () => {
   const [score, setScore] = useState<number>(100);
   const [showScore, setShowScore] = useState<boolean>(false);
   const [isAnimated, setIsAnimated] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const handleCheck = (index: number) => {
     const updatedCheckedItems = [...checkedItems];
@@ -92,6 +95,48 @@ const PurityTest: React.FC = () => {
     if (score >= 30) return "You've been around the block.";
     if (score >= 10) return "You're quite experienced.";
     return "You're practically shameless!";
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: 'UT Purity Test',
+      text: `I scored ${score}% on the UT Purity Test! ${getScoreMessage()} Take the test yourself:`,
+      url: window.location.href,
+    };
+
+    if (navigator.share && navigator.canShare(shareData)) {
+      try {
+        await navigator.share(shareData);
+        toast({
+          title: "Shared successfully",
+          description: "Thanks for sharing the UT Purity Test!",
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+        fallbackShare();
+      }
+    } else {
+      fallbackShare();
+    }
+  };
+
+  const fallbackShare = () => {
+    const shareText = `I scored ${score}% on the UT Purity Test! ${getScoreMessage()} Take the test yourself: ${window.location.href}`;
+    
+    try {
+      navigator.clipboard.writeText(shareText);
+      toast({
+        title: "Link copied to clipboard",
+        description: "Share the link with your friends!",
+      });
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      toast({
+        title: "Couldn't copy link",
+        description: "Please try again or share manually",
+        variant: "destructive",
+      });
+    }
   };
 
   return (
@@ -153,7 +198,15 @@ const PurityTest: React.FC = () => {
             <h2 className={cn("text-3xl font-bold mb-2", isAnimated ? "animate-fadeIn" : "")}>
               Your Purity Score: {score}%
             </h2>
-            <p className="text-lg">{getScoreMessage()}</p>
+            <p className="text-lg mb-6">{getScoreMessage()}</p>
+            
+            <Button 
+              onClick={handleShare} 
+              className="flex items-center gap-2 mx-auto bg-title-red hover:bg-red-800 text-white"
+            >
+              <Share2 size={18} />
+              Share My Score
+            </Button>
           </div>
         )}
       </div>

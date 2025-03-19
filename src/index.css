@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -96,6 +90,66 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-parchment text-foreground;
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50C55 45 55 55 60 50M40 50C45 45 45 55 50 50' stroke='%23d1c8a0' stroke-width='1' fill='none' opacity='0.2'/%3E%3C/svg%3E");
+  }
+
+  .title-container {
+    position: relative;
+  }
+
+  .title-container::before,
+  .title-container::after {
+    content: "";
+    position: absolute;
+    height: 3px;
+    background-color: #000;
+    width: 100%;
+  }
+
+  .title-container::before {
+    top: 0;
+  }
+
+  .title-container::after {
+    bottom: 0;
+  }
+
+  .official-text {
+    position: relative;
+    transform: rotate(-5deg);
+    display: inline-block;
+    margin-right: -0.5em;
+    font-weight: bold;
+  }
+
+  .purity-checkbox {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid black;
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  .purity-checkbox:checked::after {
+    content: "✓";
+    font-size: 12px;
+    position: absolute;
+    top: -2px;
+    left: 2px;
+  }
+
+  .purity-test-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+  }
+
+  .purity-test-item input {
+    margin-top: 3px;
   }
 }

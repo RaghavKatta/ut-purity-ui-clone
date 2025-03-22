@@ -1,69 +1,82 @@
-# Welcome to your Lovable project
 
-## Project info
+# UT Purity Test
 
-**URL**: https://lovable.dev/projects/e4a5ea3f-ee1e-4a29-828a-dd9533b217bd
+A web application implementing the University of Texas Purity Test - a classic college survey that lets users check off items they've never done to calculate their "purity" percentage.
 
-## How can I edit this code?
+## About the Project
 
-There are several ways of editing your application.
+The UT Purity Test is a self-assessment questionnaire that has circulated among college students for decades. This modern web implementation allows users to:
 
-**Use Lovable**
+- Take the full 100-question purity test
+- Get an instant purity score (higher = more "pure")
+- Optionally save their results anonymously
+- Share their score with friends
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/e4a5ea3f-ee1e-4a29-828a-dd9533b217bd) and start prompting.
+## Features
 
-Changes made via Lovable will be committed automatically to this repo.
+- Clean, mobile-responsive design
+- Real-time score calculation
+- Anonymous data storage using Supabase
+- Share functionality for social media
 
-**Use your preferred IDE**
+## Technologies Used
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+This project is built with:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- React 18
+- TypeScript
+- Vite
+- Tailwind CSS
+- shadcn/ui component library
+- Supabase for database
 
-Follow these steps:
+## Getting Started
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Prerequisites
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- Node.js (v16.x or higher)
+- npm or yarn
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+1. Clone the repository
+   ```
+   git clone https://github.com/yourusername/ut-purity-test.git
+   cd ut-purity-test
+   ```
+
+2. Install dependencies
+   ```
+   npm install
+   # or
+   yarn install
+   ```
+
+3. Start the development server
+   ```
+   npm run dev
+   # or
+   yarn dev
+   ```
+
+4. Open your browser and navigate to `http://localhost:8080`
+
+## Deployment
+
+This project can be deployed on any static site hosting platform like Netlify, Vercel, or GitHub Pages.
+
+```
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+The build files will be generated in the `dist` directory, which can be deployed to your hosting service of choice.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## License
 
-**Use GitHub Codespaces**
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Acknowledgments
 
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/e4a5ea3f-ee1e-4a29-828a-dd9533b217bd) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+- University of Texas students for the original purity test questions
+- The shadcn/ui team for the beautiful component library
+- Supabase for the backend services

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
@@ -97,7 +96,6 @@ const PurityTest: React.FC = () => {
     
     try {
       setIsSubmitting(true);
-      // Save to anonymous responses since we're not implementing auth for now
       const { error } = await supabase
         .from('anonymous_purity_responses')
         .insert({
@@ -107,25 +105,11 @@ const PurityTest: React.FC = () => {
       
       if (error) {
         console.error('Error saving response:', error);
-        toast({
-          title: "Error saving your score",
-          description: "We couldn't save your score to our database. Please try again later.",
-          variant: "destructive",
-        });
       } else {
         setHasSubmitted(true);
-        toast({
-          title: "Score saved!",
-          description: "Your purity score has been recorded. Share it with your friends!",
-        });
       }
     } catch (err) {
       console.error('Error in submission:', err);
-      toast({
-        title: "Something went wrong",
-        description: "We couldn't save your score. Please try again later.",
-        variant: "destructive",
-      });
     } finally {
       setIsSubmitting(false);
     }

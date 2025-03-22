@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
@@ -74,6 +75,7 @@ const PurityTest: React.FC = () => {
   const [score, setScore] = useState<number>(100);
   const [showScore, setShowScore] = useState<boolean>(false);
   const [isAnimated, setIsAnimated] = useState<boolean>(false);
+  const [showSuggestionForm, setShowSuggestionForm] = useState<boolean>(false);
   const { toast } = useToast();
 
   const handleCheck = (index: number) => {
@@ -88,6 +90,14 @@ const PurityTest: React.FC = () => {
     setScore(newScore);
     setShowScore(true);
     setIsAnimated(true);
+  };
+
+  const handleSuggestionClick = () => {
+    setShowSuggestionForm(!showSuggestionForm);
+    toast({
+      title: "Coming Soon!",
+      description: "This feature is currently under development. Check back later!",
+    });
   };
 
   useEffect(() => {
@@ -164,20 +174,23 @@ const PurityTest: React.FC = () => {
 
       <div className="text-center mb-8">
         <p className="font-serif mb-4">
-          The Purity Test has historically served as a segue from O-week to true college life at UT.
+          Welcome to the semi-official, completely unendorsed, totally-not-going-to-get-you-expelled UT Purity Test!
+        </p>
+        <p className="font-serif mb-4">
+          The Purity Test has historically served as the ultimate transition from wide-eyed freshman to 
+          battle-hardened upperclassman. Consider it your unofficial UT bucket list that the admissions office definitely doesn't want you to complete.
         </p>
         <p className="font-serif">
-          It's a voluntary opportunity for O-week groups to bond, and for students to track the maturation
-          of their experiences throughout college.
+          All questions sourced from an anonymous UT student survey that the administration is definitely not monitoring.
         </p>
       </div>
 
       <div className="text-center font-bold mb-8">
-        Caution: This is not a bucket list. Completion of all items on this test will likely result in death.
+        WARNING: This is NOT a to-do list. Attempting all items will likely result in academic probation, possible expulsion, or at minimum a strongly worded email from your academic advisor.
       </div>
 
       <div className="text-center mb-8">
-        Click on every item you have done.
+        Click on every item you have done. No judgment... unless your score is suspiciously low.
       </div>
 
       <div className="grid grid-cols-1 gap-y-1 mb-10">
@@ -221,6 +234,16 @@ const PurityTest: React.FC = () => {
             </Button>
           </div>
         )}
+
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-600 mb-2">Think we missed something quintessentially UT?</p>
+          <button
+            onClick={handleSuggestionClick}
+            className="text-title-red underline text-sm hover:text-red-800"
+          >
+            Suggest a question for the next update
+          </button>
+        </div>
       </div>
     </div>
   );

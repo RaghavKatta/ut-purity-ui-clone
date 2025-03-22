@@ -7,7 +7,6 @@ A web application implementing the University of Texas Purity Test - a classic c
 
 The UT Purity Test is a self-assessment questionnaire that has circulated among college students for decades. This modern web implementation allows users to:
 
-- Take the full 100-question purity test
 - Get an instant purity score (higher = more "pure")
 - Optionally save their results anonymously
 - Share their score with friends

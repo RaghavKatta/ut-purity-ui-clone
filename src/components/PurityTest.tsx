@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
@@ -140,7 +141,7 @@ const PurityTest: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4">
+    <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="title-container relative mb-10 pt-3 pb-3">
         <h1 className="text-5xl font-title text-center leading-snug">
           <span className="official-text text-title-red">The Official</span> 
@@ -168,7 +169,7 @@ const PurityTest: React.FC = () => {
         Click on every item you have done. <span className="underline">MPS</span> stands for Member of the Preferred Sex.
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-1 mb-10">
+      <div className="grid grid-cols-1 gap-y-1 mb-10">
         {questions.map((question, index) => (
           <div key={index} className="purity-test-item">
             <input

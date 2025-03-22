@@ -9,7 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      anonymous_purity_responses: {
+        Row: {
+          checked_items: boolean[]
+          created_at: string
+          id: string
+          score: number
+        }
+        Insert: {
+          checked_items: boolean[]
+          created_at?: string
+          id?: string
+          score: number
+        }
+        Update: {
+          checked_items?: boolean[]
+          created_at?: string
+          id?: string
+          score?: number
+        }
+        Relationships: []
+      }
+      purity_test_responses: {
+        Row: {
+          checked_items: boolean[]
+          created_at: string
+          id: string
+          score: number
+          user_id: string | null
+        }
+        Insert: {
+          checked_items: boolean[]
+          created_at?: string
+          id?: string
+          score: number
+          user_id?: string | null
+        }
+        Update: {
+          checked_items?: boolean[]
+          created_at?: string
+          id?: string
+          score?: number
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

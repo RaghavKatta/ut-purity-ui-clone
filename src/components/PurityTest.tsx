@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const questions = [
   "Walked to Kins when you live in Jester?",
@@ -76,6 +77,9 @@ const PurityTest: React.FC = () => {
   const [showScore, setShowScore] = useState<boolean>(false);
   const [isAnimated, setIsAnimated] = useState<boolean>(false);
   const [showSuggestionForm, setShowSuggestionForm] = useState<boolean>(false);
+  const [suggestion, setSuggestion] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [hasSubmitted, setHasSubmitted] = useState<boolean>(false);
   const { toast } = useToast();
 
   const handleCheck = (index: number) => {
@@ -84,20 +88,71 @@ const PurityTest: React.FC = () => {
     setCheckedItems(updatedCheckedItems);
   };
 
-  const calculateScore = () => {
+  const calculateScore = async () => {
     const checkedCount = checkedItems.filter(item => item).length;
     const newScore = Math.max(0, 100 - Math.round((checkedCount / questions.length) * 100));
     setScore(newScore);
     setShowScore(true);
     setIsAnimated(true);
+    
+    try {
+      setIsSubmitting(true);
+      // Save to anonymous responses since we're not implementing auth for now
+      const { error } = await supabase
+        .from('anonymous_purity_responses')
+        .insert({
+          score: newScore,
+          checked_items: checkedItems
+        });
+      
+      if (error) {
+        console.error('Error saving response:', error);
+        toast({
+          title: "Error saving your score",
+          description: "We couldn't save your score to our database. Please try again later.",
+          variant: "destructive",
+        });
+      } else {
+        setHasSubmitted(true);
+        toast({
+          title: "Score saved!",
+          description: "Your purity score has been recorded. Share it with your friends!",
+        });
+      }
+    } catch (err) {
+      console.error('Error in submission:', err);
+      toast({
+        title: "Something went wrong",
+        description: "We couldn't save your score. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSuggestionClick = () => {
     setShowSuggestionForm(!showSuggestionForm);
+  };
+
+  const handleSuggestionSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (suggestion.trim().length === 0) {
+      toast({
+        title: "Empty suggestion",
+        description: "Please write something before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     toast({
-      title: "Coming Soon!",
-      description: "This feature is currently under development. Check back later!",
+      title: "Thanks for your suggestion!",
+      description: "We'll review it for the next update.",
     });
+    
+    setSuggestion('');
+    setShowSuggestionForm(false);
   };
 
   useEffect(() => {
@@ -213,9 +268,13 @@ const PurityTest: React.FC = () => {
       <div className="text-center">
         <button
           onClick={calculateScore}
-          className="bg-title-red text-white py-2 px-6 rounded-md hover:bg-red-800 transition-colors mb-4"
+          disabled={isSubmitting}
+          className={cn(
+            "bg-title-red text-white py-2 px-6 rounded-md hover:bg-red-800 transition-colors mb-4",
+            isSubmitting && "opacity-70 cursor-not-allowed"
+          )}
         >
-          Calculate My Score
+          {isSubmitting ? "Saving..." : "Calculate My Score"}
         </button>
 
         {showScore && (
@@ -243,6 +302,21 @@ const PurityTest: React.FC = () => {
           >
             Suggest a question for the next update
           </button>
+          
+          {showSuggestionForm && (
+            <form onSubmit={handleSuggestionSubmit} className="mt-4 p-4 border rounded-md max-w-md mx-auto">
+              <textarea
+                value={suggestion}
+                onChange={(e) => setSuggestion(e.target.value)}
+                placeholder="What's your suggestion for a new question?"
+                className="w-full p-2 border rounded-md mb-3"
+                rows={3}
+              />
+              <Button type="submit" className="bg-title-red hover:bg-red-800 text-white">
+                Submit Suggestion
+              </Button>
+            </form>
+          )}
         </div>
       </div>
     </div>
